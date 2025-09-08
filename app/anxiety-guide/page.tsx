@@ -4,7 +4,31 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 
-const initialExercises = [
+// Define interfaces for step types
+interface BreathingStep {
+  label: string
+  seconds: number
+  instruction: string
+  scale: number
+  color: string
+}
+
+interface GroundingStep {
+  label: string
+  instruction: string
+  prompt: string
+}
+
+interface Exercise {
+  key: string
+  type: string
+  title: string
+  description: string
+  steps: BreathingStep[] | GroundingStep[]
+  note?: string
+}
+
+const initialExercises: Exercise[] = [
   {
     key: "breathing-478",
     type: "breathing",
@@ -129,7 +153,8 @@ export default function AnxietyGuidePage() {
   const router = useRouter()
   const [exerciseIndex, setExerciseIndex] = useState(0)
   const [breathStep, setBreathStep] = useState(0)
-  const [timer, setTimer] = useState(initialExercises[0].steps[0].seconds)
+  // Use type assertion for initial timer value
+  const [timer, setTimer] = useState((initialExercises[0].steps[0] as BreathingStep).seconds)
   const [isBreathingStarted, setIsBreathingStarted] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
   const [groundStep, setGroundStep] = useState(0)
@@ -139,7 +164,7 @@ export default function AnxietyGuidePage() {
   const [aiTips, setAiTips] = useState('')
   const [aiFeedback, setAiFeedback] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [customExercises, setCustomExercises] = useState(initialExercises)
+  const [customExercises, setCustomExercises] = useState<Exercise[]>(initialExercises)
   const [exerciseTypeIndex, setExerciseTypeIndex] = useState(0)
 
   const currentExercise = customExercises[exerciseIndex]
@@ -148,7 +173,7 @@ export default function AnxietyGuidePage() {
 
   useEffect(() => {
     if (isBreathingStarted && isBreathing) {
-      setTimer(currentExercise.steps[breathStep].seconds)
+      setTimer((currentExercise.steps[breathStep] as BreathingStep).seconds)
     }
   }, [breathStep, isBreathingStarted, isBreathing, currentExercise.steps])
 
@@ -165,12 +190,12 @@ export default function AnxietyGuidePage() {
       })
     }, 1000)
     return () => clearInterval(intervalRef.current)
-  }, [breathStep, isBreathing, isBreathingStarted, isPaused, currentExercise.steps])
+  }, [breath Upside-down exclamation markbreathStep, isBreathing, isBreathingStarted, isPaused, currentExercise.steps])
 
   useEffect(() => {
     if (isBreathing) {
       setBreathStep(0)
-      setTimer(currentExercise.steps[0].seconds)
+      setTimer((currentExercise.steps[0] as BreathingStep).seconds)
       setIsBreathingStarted(false)
       setIsPaused(false)
       clearInterval(intervalRef.current)
@@ -242,7 +267,6 @@ export default function AnxietyGuidePage() {
     const moodLower = userMood.toLowerCase()
     let preferredType = exerciseTypes[exerciseTypeIndex % exerciseTypes.length]
 
-    // Adjust type based on mood for variety
     if (moodLower.includes('sad') || moodLower.includes('stressed')) {
       preferredType = preferredType === 'visualization' ? 'mindfulness' : preferredType
     } else if (moodLower.includes('anxious') || moodLower.includes('restless')) {
@@ -387,7 +411,7 @@ export default function AnxietyGuidePage() {
               <section className="mb-8">
                 <BreathingStepCircle
                   timer={timer}
-                  step={currentExercise.steps[breathStep]}
+                  step={currentExercise.steps[breathStep] as BreathingStep}
                   isStarted={isBreathingStarted}
                   onStart={() => setIsBreathingStarted(true)}
                   title={currentExercise.title}
