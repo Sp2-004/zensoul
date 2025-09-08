@@ -172,25 +172,19 @@ export default function AnxietyGuidePage() {
   const isGrounding = currentExercise.type === "grounding" || currentExercise.type === "visualization" || currentExercise.type === "mindfulness"
 
   useEffect(() => {
-    if (isBreathingStarted && isBreathing) {
-      setTimer((currentExercise.steps[breathStep] as BreathingStep).seconds)
-    }
-  }, [breathStep, isBreathingStarted, isBreathing, currentExercise.steps])
-
-  useEffect(() => {
-    if (!isBreathing || !isBreathingStarted || isPaused) return
-    intervalRef.current = setInterval(() => {
-      setTimer((t) => {
-        if (t > 1) return t - 1
-        clearInterval(intervalRef.current)
-        setTimeout(() => {
-          setBreathStep((s) => (s + 1) % currentExercise.steps.length)
-        }, 400)
-        return 0
-      })
-    }, 1000)
-    return () => clearInterval(intervalRef.current)
-  }, [breath Upside-down exclamation markbreathStep, isBreathing, isBreathingStarted, isPaused, currentExercise.steps])
+  if (!isBreathing || !isBreathingStarted || isPaused) return;
+  intervalRef.current = setInterval(() => {
+    setTimer((t) => {
+      if (t > 1) return t - 1;
+      clearInterval(intervalRef.current);
+      setTimeout(() => {
+        setBreathStep((s) => (s + 1) % currentExercise.steps.length);
+      }, 400);
+      return 0;
+    });
+  }, 1000);
+  return () => clearInterval(intervalRef.current);
+}, [breathStep, isBreathing, isBreathingStarted, isPaused, currentExercise.steps]);
 
   useEffect(() => {
     if (isBreathing) {
