@@ -1,7 +1,9 @@
+
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, useAnimation } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 
 const defaultSounds = [
   {
@@ -63,12 +65,29 @@ function getYouTubeVideoId(url: string) {
   }
 }
 
+// Check if a YouTube video is available
+const isVideoAvailable = async (url: string): Promise<boolean> => {
+  try {
+    const videoId = getYouTubeVideoId(url)
+    if (!videoId) return false
+    const oembedResponse = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+    if (!oembedResponse.ok) return false
+    const thumbnailResponse = await fetch(`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`)
+    return thumbnailResponse.ok
+  } catch (error) {
+    console.error(`Error checking availability for ${url}:`, error)
+    return false
+  }
+}
+
 // Clean markdown from API response
 const cleanJsonResponse = (response: string): string => {
-  // Remove markdown code block markers and extra whitespace
-  let cleaned = response.replace(/```json\s*|\s*```/g, '').trim()
-  // Remove any leading/trailing newlines or spaces
+  let cleaned = response.replace(/```json\s*|\s*```|\n/g, '').trim()
   cleaned = cleaned.replace(/^\s+|\s+$/g, '')
+  console.log('Cleaned response:', cleaned)
   return cleaned
 }
 
@@ -80,9 +99,7 @@ const callGeminiAPI = async (prompt: string) => {
     contents: [
       {
         parts: [
-          {
-            text: prompt
-          }
+          { text: prompt }
         ]
       }
     ]
@@ -99,9 +116,11 @@ const callGeminiAPI = async (prompt: string) => {
     })
     const data = await response.json()
     if (data.error) {
+      console.error('API error:', data.error)
       return `Error: ${data.error.message || 'Unknown API error'}`
     }
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response text available.'
+    console.log('Raw API response:', text)
     return cleanJsonResponse(text)
   } catch (error) {
     console.error('Error calling Gemini API:', error)
@@ -114,35 +133,65 @@ export default function RelaxingSoundsPage() {
   const [sounds, setSounds] = useState(defaultSounds)
   const [aiRecommendation, setAiRecommendation] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
+
+  // Filter out unavailable videos, with fallback to include them if too many are rejected
+  const filterAvailableSounds = async (soundsData: typeof defaultSounds) => {
+    const updatedSounds = await Promise.all(soundsData.map(async (group) => ({
+      ...group,
+      tracks: await Promise.all(group.tracks.map(async (track) => {
+        const isAvailable = await isVideoAvailable(track.youtube)
+        console.log(`Video ${track.title} (${track.youtube}) availability:`, isAvailable)
+        return isAvailable ? track : { ...track, unavailable: true }
+      }))
+    })))
+    return updatedSounds.filter(group => group.tracks.length > 0)
+  }
+
+  // Initial check for default sounds
+  useEffect(() => {
+    const checkDefaultSounds = async () => {
+      const availableSounds = await filterAvailableSounds(defaultSounds)
+      setSounds(availableSounds.length > 0 ? availableSounds : defaultSounds)
+    }
+    checkDefaultSounds()
+  }, [])
 
   // Function to get AI-curated sounds based on user input
   const getAiSounds = async () => {
     if (!userMood.trim()) return
     setIsLoading(true)
     setAiRecommendation('')
-    const prompt = `Based on the user's input: "${userMood}". Suggest a curated list of relaxing sound categories and tracks to help with relaxation, focus, or sleep. Each category should have a section name and a list of tracks, where each track includes a title, description, and a valid YouTube URL. Respond strictly with a JSON object, no other text or explanations: [
+    const prompt = `Based on the user's input: "${userMood}". Suggest a curated list of 2-4 relaxing sound categories and tracks to help with relaxation, focus, or sleep, specifically tailored for ${userMood} (e.g., soothing music for sadness or stress relief). Return a JSON array of categories, each with a "section" (string) and "tracks" (array of objects). Each track must have "title" (string), "description" (string), and "youtube" (valid YouTube URL with a unique video ID from recently available videos, ideally posted within the last year as of September 2025). Use diverse, currently accessible YouTube videos matching the theme. Do not include any text outside the JSON array. Example:
+[
+  {
+    "section": "Ocean Sounds",
+    "tracks": [
       {
-        "section": "Category name",
-        "tracks": [
-          {
-            "title": "Track title",
-            "description": "Track description",
-            "youtube": "Valid YouTube URL"
-          }
-        ]
+        "title": "Gentle Waves",
+        "description": "Soothing ocean waves for relaxation.",
+        "youtube": "https://www.youtube.com/watch?v=1ZYbU82GVz4"
       }
-    ]`
+    ]
+  }
+]`
     const response = await callGeminiAPI(prompt)
-    setAiRecommendation(response)
+    console.log('API response for validation:', response)
     try {
       const parsed = JSON.parse(response)
-      if (Array.isArray(parsed) && parsed.every(category => 
-        category.section && Array.isArray(category.tracks) && 
-        category.tracks.every((track: any) => track.title && track.description && track.youtube)
-      )) {
-        setSounds(parsed)
+      console.log('Parsed API response:', parsed)
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        const availableSounds = await filterAvailableSounds(parsed)
+        if (availableSounds.length === 0 && (userMood.toLowerCase().includes('sad') || userMood.toLowerCase().includes('stressed'))) {
+          setSounds(sadStressedFallback)
+          setAiRecommendation('No available AI suggestions found. Using curated fallback for sad/stressed moods.')
+        } else {
+          setSounds(availableSounds.length > 0 ? availableSounds : parsed)
+          setAiRecommendation('AI-curated sounds loaded successfully.')
+        }
       } else {
         setAiRecommendation('Invalid sound format received from AI. Showing default sounds.')
+        setSounds(defaultSounds)
       }
     } catch (error) {
       console.error('Error parsing AI response:', error)
@@ -159,8 +208,20 @@ export default function RelaxingSoundsPage() {
           AI-Curated Relaxing Sounds
         </h1>
         <p className="mb-8 text-center text-gray-600 dark:text-gray-300">
-          Describe your mood or desired sound (e.g., "ocean waves" or "feeling stressed") to get personalized relaxing sounds.
+          Describe your mood or desired sound (e.g., "sad", "stressed", "ocean waves") to get personalized relaxing sounds.
         </p>
+
+        {/* Back to Home Button */}
+        <div className="text-center mb-6">
+          <motion.button
+            className="px-6 py-2 rounded-lg bg-gray-600 text-white font-semibold hover:bg-gray-700 transition"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => router.push('/')}
+          >
+            Back to Home
+          </motion.button>
+        </div>
 
         {/* User Input for Mood/Sound Preference */}
         <section className="mb-8">
@@ -170,7 +231,7 @@ export default function RelaxingSoundsPage() {
           <div className="flex gap-4">
             <input
               className="flex-1 p-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 transition"
-              placeholder="E.g., ocean waves, feeling stressed..."
+              placeholder="E.g., sad, stressed, ocean waves..."
               value={userMood}
               onChange={(e) => setUserMood(e.target.value)}
             />
@@ -186,7 +247,7 @@ export default function RelaxingSoundsPage() {
           </div>
           {aiRecommendation && (
             <motion.p
-              className="mt-4 text-gray-700 dark:text-gray-300"
+              className={`mt-4 text-center ${aiRecommendation.includes('Invalid') || aiRecommendation.includes('Failed') ? 'text-red-500' : 'text-gray-700 dark:text-gray-300'}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -223,11 +284,22 @@ export default function RelaxingSoundsPage() {
                         aria-label={`Watch ${track.title} on YouTube`}
                       >
                         <div className="overflow-hidden rounded-lg shadow-lg w-72 h-40 border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 flex items-center justify-center transition-transform transform hover:scale-105 relative">
-                          <img
-                            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-                            alt={`${track.title} YouTube thumbnail`}
-                            className="w-full h-full object-cover"
-                          />
+                          {videoId && (
+                            <img
+                              src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+                              alt={`${track.title} YouTube thumbnail`}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.currentTarget.src = '/placeholder-image.jpg'
+                                e.currentTarget.alt = `${track.title} thumbnail unavailable`
+                              }}
+                            />
+                          )}
+                          {track.unavailable && (
+                            <span className="absolute bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold top-2 left-2">
+                              Unavailable
+                            </span>
+                          )}
                           <span className="absolute bg-black bg-opacity-60 text-white px-3 py-1 rounded-full text-xs font-semibold bottom-3 right-3 flex items-center">
                             <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 24 24">
                               <path d="M10 15l5.19-3L10 9v6zm12-3c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-6zm-2 6H4v-6h16v6z"></path>
