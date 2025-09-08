@@ -48,7 +48,7 @@ export default function ElevenLabsWidget() {
         setError(null)
         // Hide default rendering
         const defaultConvai = document.querySelector('elevenlabs-convai')
-        if (defaultConvai) {
+        if (defaultConvai instanceof HTMLElement) {
           defaultConvai.style.display = 'none'
         }
       }
