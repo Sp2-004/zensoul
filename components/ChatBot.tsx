@@ -3,6 +3,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { toast } from './ui/toaster'
 
+// Define Mood type for type safety
+type Mood = 'neutral' | 'sad' | 'happy' | 'anxious'
+
 interface Message {
   id: string
   text: string
@@ -11,7 +14,7 @@ interface Message {
   musicUrl?: string
 }
 
-const moodMusic = {
+const moodMusic: Record<Mood, { title: string; id: string }[]> = {
   happy: [
     { title: "Happy Upbeat Music", id: "ZbZSe6N_BXs" },
     { title: "Feel Good Vibes", id: "4D9G9bD4zQk" }
@@ -52,7 +55,7 @@ export default function ChatBot() {
     scrollToBottom()
   }, [messages])
 
-  const detectMoodAndMusic = (text: string) => {
+  const detectMoodAndMusic = (text: string): { mood: Mood; needsMusic: boolean } => {
     const lowerText = text.toLowerCase()
     
     if (lowerText.includes('music') || lowerText.includes('play') || lowerText.includes('song')) {
@@ -79,7 +82,7 @@ export default function ChatBot() {
     return { mood: 'neutral', needsMusic: false }
   }
 
-  const getRandomMusic = (mood: keyof typeof moodMusic) => {
+  const getRandomMusic = (mood: Mood) => {
     const musicList = moodMusic[mood]
     return musicList[Math.floor(Math.random() * musicList.length)]
   }
