@@ -461,83 +461,83 @@ export default function AnxietyGuidePage() {
             )}
 
             {isGrounding && (
-              <motion.section
-                className="mb-8"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.4 }}
-              >
-                <label className="block text-lg font-medium mb-2 text-gray-900 dark:text-white">
-                  {currentExercise.steps[groundStep].label}
-                </label>
-                <p className="mb-4 text-gray-700 dark:text-gray-300">
-                  {currentExercise.steps[groundStep].instruction}
-                </p>
-                <div className="relative">
-                  <input
-                    className="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 transition"
-                    placeholder={currentExercise.steps[groundStep].prompt}
-                    value={groundingResponses[groundStep] || ""}
-                    onChange={(e) => setGroundingResponses({
-                      ...groundingResponses,
-                      [groundStep]: e.target.value,
-                    })}
-                  />
-                  <AnimatePresence>
-                    {groundingResponses[groundStep]?.trim() && (
-                      <motion.span
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-green-500"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        exit={{ scale: 0 }}
-                      >
-                        ✓
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </div>
-                <div className="flex justify-between mt-4">
-                  <motion.button
-                    className="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold disabled:opacity-50"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setGroundStep((s) => Math.max(s - 1, 0))}
-                    disabled={groundStep === 0}
-                  >
-                    Previous
-                  </motion.button>
-                  <motion.button
-                    className="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold disabled:opacity-50"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setGroundStep((s) => Math.min(s + 1, currentExercise.steps.length - 1))}
-                    disabled={groundStep === currentExercise.steps.length - 1}
-                  >
-                    Next
-                  </motion.button>
-                </div>
-                <div className="flex justify-center mt-6">
-                  <motion.button
-                    className="px-6 py-2 rounded-lg bg-green-600 text-white font-semibold disabled:opacity-50"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={getAiFeedback}
-                    disabled={isLoading || Object.keys(groundingResponses).length === 0}
-                  >
-                    {isLoading ? 'Loading...' : 'Get AI Feedback'}
-                  </motion.button>
-                </div>
-                {aiFeedback && (
-                  <motion.div
-                    className="mt-4 text-gray-700 dark:text-gray-300 whitespace-pre-line"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  >
-                    {aiFeedback}
-                  </motion.div>
-                )}
-              </motion.section>
-            )}
+  <motion.section
+    className="mb-8"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.4 }}
+  >
+    <label className="block text-lg font-medium mb-2 text-gray-900 dark:text-white">
+      {currentExercise.steps[groundStep].label}
+    </label>
+    <p className="mb-4 text-gray-700 dark:text-gray-300">
+      {currentExercise.steps[groundStep].instruction}
+    </p>
+    <div className="relative">
+      <input
+        className="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 transition"
+        placeholder={(currentExercise.steps[groundStep] as GroundingStep).prompt}
+        value={groundingResponses[groundStep] || ""}
+        onChange={(e) => setGroundingResponses({
+          ...groundingResponses,
+          [groundStep]: e.target.value,
+        })}
+      />
+      <AnimatePresence>
+        {groundingResponses[groundStep]?.trim() && (
+          <motion.span
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-green-500"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}
+          >
+            ✓
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </div>
+    <div className="flex justify-between mt-4">
+      <motion.button
+        className="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold disabled:opacity-50"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => setGroundStep((s) => Math.max(s - 1, 0))}
+        disabled={groundStep === 0}
+      >
+        Previous
+      </motion.button>
+      <motion.button
+        className="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold disabled:opacity-50"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => setGroundStep((s) => Math.min(s + 1, currentExercise.steps.length - 1))}
+        disabled={groundStep === currentExercise.steps.length - 1}
+      >
+        Next
+      </motion.button>
+    </div>
+    <div className="flex justify-center mt-6">
+      <motion.button
+        className="px-6 py-2 rounded-lg bg-green-600 text-white font-semibold disabled:opacity-50"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={getAiFeedback}
+        disabled={isLoading || Object.keys(groundingResponses).length === 0}
+      >
+        {isLoading ? 'Loading...' : 'Get AI Feedback'}
+      </motion.button>
+    </div>
+    {aiFeedback && (
+      <motion.div
+        className="mt-4 text-gray-700 dark:text-gray-300 whitespace-pre-line"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
+        {aiFeedback}
+      </motion.div>
+    )}
+  </motion.section>
+)}
           </motion.div>
         </AnimatePresence>
       </motion.main>
