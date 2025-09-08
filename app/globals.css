@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply transition-colors duration-300;
+  }
+}
+
+@layer utilities {
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Breathing circle animation */
+@keyframes glowPulse {
+  0%   { 
+    opacity: 0.66; 
+    box-shadow: 0 0 0 0 currentColor, 0 0 60px 10px currentColor, 0 0 120px 60px currentColor;
+  }
+  50%  { 
+    opacity: 0.93; 
+    box-shadow: 0 0 0 10px currentColor, 0 0 80px 40px currentColor, 0 0 220px 120px currentColor;
+  }
+  100% { 
+    opacity: 0.66; 
+    box-shadow: 0 0 0 0 currentColor, 0 0 60px 10px currentColor, 0 0 120px 60px currentColor;
+  }
+}
+
+@keyframes floatNumber {
+  0%   { transform: translateY(16px) scale(0.98); }
+  50%  { transform: translateY(-6px) scale(1.08); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.animate-floatNumber { 
+  animation: floatNumber 0.7s cubic-bezier(0.6,0,0.4,1); 
+}
+
+.animate-glow {
+  animation: glowPulse 3s infinite;
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800 rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full hover:bg-gray-400 dark:hover:bg-gray-500;
+}
+
+/* ElevenLabs widget styling */
+elevenlabs-convai {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+/* Focus styles */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  @apply outline-none ring-2 ring-violet-500 ring-offset-2 dark:ring-offset-gray-800;
+}
+
+/* Smooth transitions */
+* {
+  @apply transition-colors duration-200;
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Loading animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.shimmer-dark {
+  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Improved button styles */
+.btn-primary {
+  @apply bg-gradient-to-r from-violet-500 to-purple-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:from-violet-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold py-2 px-4 rounded-lg shadow hover:bg-gray-300 dark:hover:bg-gray-600 transform hover:scale-105 transition-all duration-200;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 transition-all duration-200 hover:shadow-xl;
+}
+
+.card-glass {
+  @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-xl border border-white/20 p-6 transition-all duration-200 hover:shadow-2xl;
+}
+
+/* Text styles */
+.text-gradient {
+  @apply bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent;
+}
+
+/* Animation delays for staggered effects */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }

@@ -1,0 +1,10 @@
+{
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/api/ai/affirmation/route": "app/api/ai/affirmation/route.js",
+  "/api/journal/route": "app/api/journal/route.js",
+  "/page": "app/page.js",
+  "/journal/page": "app/journal/page.js",
+  "/anxiety-guide/page": "app/anxiety-guide/page.js",
+  "/emergency/page": "app/emergency/page.js",
+  "/relaxing-sounds/page": "app/relaxing-sounds/page.js"
+}
