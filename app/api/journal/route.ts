@@ -74,14 +74,15 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest) {
   try {
     const session = await getServerSession()
     if (!session?.user?.email) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { id } = params // Get id from path parameter
+    // Access the id from req.params
+    const { id } = req.params
     if (!id) {
       return NextResponse.json({ error: 'Entry ID is required' }, { status: 400 })
     }
