@@ -4,7 +4,20 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 
-const defaultSounds = [
+// Define interfaces for type safety
+interface Track {
+  title: string
+  description: string
+  youtube: string
+  unavailable?: boolean // Optional property for unavailable videos
+}
+
+interface SoundGroup {
+  section: string
+  tracks: Track[]
+}
+
+const defaultSounds: SoundGroup[] = [
   {
     section: "Relaxing Sounds",
     tracks: [
@@ -53,7 +66,7 @@ const defaultSounds = [
 ]
 
 // Fallback sounds for sad or stressed moods
-const sadStressedFallback = [
+const sadStressedFallback: SoundGroup[] = [
   {
     section: "Soothing Ambiance",
     tracks: [
@@ -158,13 +171,13 @@ const callGeminiAPI = async (prompt: string) => {
 
 export default function RelaxingSoundsPage() {
   const [userMood, setUserMood] = useState('')
-  const [sounds, setSounds] = useState(defaultSounds)
+  const [sounds, setSounds] = useState<SoundGroup[]>(defaultSounds)
   const [aiRecommendation, setAiRecommendation] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
   // Filter out unavailable videos, with fallback to include them if too many are rejected
-  const filterAvailableSounds = async (soundsData: typeof defaultSounds) => {
+  const filterAvailableSounds = async (soundsData: SoundGroup[]): Promise<SoundGroup[]> => {
     const updatedSounds = await Promise.all(soundsData.map(async (group) => ({
       ...group,
       tracks: await Promise.all(group.tracks.map(async (track) => {
@@ -206,7 +219,7 @@ export default function RelaxingSoundsPage() {
     const response = await callGeminiAPI(prompt)
     console.log('API response for validation:', response)
     try {
-      const parsed = JSON.parse(response)
+      const parsed: SoundGroup[] = JSON.parse(response)
       console.log('Parsed API response:', parsed)
       if (Array.isArray(parsed) && parsed.length > 0) {
         const availableSounds = await filterAvailableSounds(parsed)
