@@ -1,8 +1,7 @@
-
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, useAnimation } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 
 const defaultSounds = [
@@ -47,6 +46,35 @@ const defaultSounds = [
       {
         title: "Nature Meditation",
         description: "Forest ambience for focus and mindfulness.",
+        youtube: "https://www.youtube.com/watch?v=OdIJ2x3nxzQ"
+      }
+    ]
+  }
+]
+
+// Fallback sounds for sad or stressed moods
+const sadStressedFallback = [
+  {
+    section: "Soothing Ambiance",
+    tracks: [
+      {
+        title: "Gentle Rain",
+        description: "Soft rain sounds to ease stress and sadness.",
+        youtube: "https://www.youtube.com/watch?v=1ZYbU82GVz4"
+      },
+      {
+        title: "Calm Piano",
+        description: "Gentle piano melodies for emotional comfort.",
+        youtube: "https://www.youtube.com/watch?v=4D9G9bD4zQk"
+      }
+    ]
+  },
+  {
+    section: "Relaxing Nature",
+    tracks: [
+      {
+        title: "Forest Stream",
+        description: "Calming stream and bird sounds for relaxation.",
         youtube: "https://www.youtube.com/watch?v=OdIJ2x3nxzQ"
       }
     ]
