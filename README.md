@@ -51,13 +51,15 @@ Before you begin, ensure you have the following installed on your system:
 
 1. **Clone the Repository**  
    Run the following commands:  
-  ``` git clone https://github.com/your-username/zensoul.git  
+  ```
+   git clone https://github.com/your-username/zensoul.git  
    cd zensoul
   ```
 
 2. **Install Dependencies**  
-  ``` npm install
- ```
+    ```
+      npm install
+    ```
 
 4. **Set Up Environment Variables**  
    Create a `.env.local` file in the root directory and add:  
@@ -70,7 +72,8 @@ Before you begin, ensure you have the following installed on your system:
    ⚠️ Note: Obtain API keys for ElevenLabs and Tavus from their respective services.  
 
 4. **Run the Development Server**  
-  ``` npm run dev
+  ```
+npm run dev
 ```
 
    Then open your browser at:  
@@ -89,11 +92,13 @@ Before you begin, ensure you have the following installed on your system:
 
 ## Building for Production
 1. **Build the Project**  
- ```  npm run build
+ ```
+ npm run build
 ```
 
 3. **Start the Production Server**  
-```   npm run start
+```
+ npm run start
  ```
 
    The app will be live at:  
