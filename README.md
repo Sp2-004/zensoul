@@ -1,4 +1,3 @@
-"""
 # ZenSoul - Mental Wellness Companion
 
 ZenSoul is a modern web application designed to support your mental wellness journey. With a focus on user-friendly design and advanced AI integrations, ZenSoul offers personalized affirmations, voice therapy, chat-based support, and a journal to track your progress. Whether you're seeking a moment of calm or interactive guidance, ZenSoul is here to help.  
@@ -52,9 +51,9 @@ Before you begin, ensure you have the following installed on your system:
 
 1. **Clone the Repository**  
    Run the following commands:  
-  ``` git clone https://github.com/your-username/zensoul.git  
+  `` git clone https://github.com/your-username/zensoul.git  
    cd zensoul
-  ```
+  ``
 
 2. **Install Dependencies**  
   ``` npm install  ```
