@@ -60,12 +60,12 @@ Before you begin, ensure you have the following installed on your system:
 
 3. **Set Up Environment Variables**  
    Create a `.env.local` file in the root directory and add:  
-```
+``
    NEXTAUTH_URL=http://localhost:3000  
    NEXTAUTH_SECRET=your-secret-key  
    ELEVENLABS_API_KEY=your-elevenlabs-api-key  
    TAVUS_API_KEY=your-tavus-api-key  
-```
+``
    ⚠️ Note: Obtain API keys for ElevenLabs and Tavus from their respective services.  
 
 4. **Run the Development Server**  
