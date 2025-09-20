@@ -52,28 +52,28 @@ Before you begin, ensure you have the following installed on your system:
 
 1. **Clone the Repository**  
    Run the following commands:  
-   git clone https://github.com/your-username/zensoul.git  
-   cd zensoul  
+  ``` git clone https://github.com/your-username/zensoul.git  
+   cd zensoul
+  ```
 
 2. **Install Dependencies**  
-   npm install  
+  ``` npm install  ```
 
 3. **Set Up Environment Variables**  
    Create a `.env.local` file in the root directory and add:  
-
+```
    NEXTAUTH_URL=http://localhost:3000  
    NEXTAUTH_SECRET=your-secret-key  
    ELEVENLABS_API_KEY=your-elevenlabs-api-key  
    TAVUS_API_KEY=your-tavus-api-key  
-
+```
    ⚠️ Note: Obtain API keys for ElevenLabs and Tavus from their respective services.  
 
 4. **Run the Development Server**  
-   npm run dev  
+  ``` npm run dev  ```
 
    Then open your browser at:  
    http://localhost:3000  
-
 ---
 
 ## Usage
@@ -88,10 +88,10 @@ Before you begin, ensure you have the following installed on your system:
 
 ## Building for Production
 1. **Build the Project**  
-   npm run build  
+ ```  npm run build  ```
 
 2. **Start the Production Server**  
-   npm run start  
+```   npm run start  ```
 
    The app will be live at:  
    http://localhost:3000  
