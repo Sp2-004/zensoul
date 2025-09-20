@@ -273,287 +273,255 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
 
-      {/* Main Content */}
-      <main className="pt-24 sm:pt-32 px-4 sm:px-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Hero Section */}
-          <div className="text-center mb-12 md:mb-16 lg:mb-20">
-            <div className="mb-6 md:mb-8">
-              <p className="text-base md:text-lg lg:text-xl text-slate-600 dark:text-slate-300 mb-2">
-                {getGreeting()}, <span className="font-semibold text-slate-800 dark:text-white">{session?.user?.name}</span>
-              </p>
-              <p className="text-xs md:text-sm lg:text-base text-slate-500 dark:text-slate-400">
-                {currentTime.toLocaleDateString('en-US', {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}
+        {/* Main Content */}
+        <main className="pt-24 sm:pt-32 px-4 sm:px-8">
+          <div className="max-w-7xl mx-auto">
+            {/* Hero Section */}
+            <div className="text-center mb-12 md:mb-16 lg:mb-20">
+              <div className="mb-6 md:mb-8">
+                <p className="text-base md:text-lg lg:text-xl text-slate-600 dark:text-slate-300 mb-2">
+                  {getGreeting()}, <span className="font-semibold text-slate-800 dark:text-white">{session?.user?.name}</span>
+                </p>
+                <p className="text-xs md:text-sm lg:text-base text-slate-500 dark:text-slate-400">
+                  {currentTime.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </p>
+              </div>
+
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-3 md:mb-4 leading-tight px-4">
+                Your Mental Wellness
+                <span className="block animate-gradient-text mt-1">
+                  Journey Continues
+                </span>
+              </h1>
+
+              <p className="text-sm md:text-base lg:text-lg text-slate-600 dark:text-slate-300 max-w-xl lg:max-w-2xl mx-auto leading-relaxed px-4">
+                Take a moment to breathe, reflect, and connect with your inner peace.
+                Your mental health journey is unique and valuable.
               </p>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-3 md:mb-4 leading-tight px-4">
-              Your Mental Wellness
-              <span className="block animate-gradient-text mt-1">
-                Journey Continues
-              </span>
-            </h1>
+            {/* Featured Tavus AI Companion Section */}
+            <div className="mb-12 md:mb-16 lg:mb-20">
+              <div className="relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-xl md:rounded-2xl lg:rounded-3xl p-4 md:p-6 lg:p-10 text-white shadow-2xl overflow-hidden animate-tavus-glow">
+                {/* Background decorations */}
+                <div className="absolute top-0 right-0 w-24 md:w-32 lg:w-40 h-24 md:h-32 lg:h-40 bg-white/10 rounded-full -translate-y-12 md:-translate-y-16 lg:-translate-y-20 translate-x-12 md:translate-x-16 lg:translate-x-20"></div>
+                <div className="absolute bottom-0 left-0 w-20 md:w-24 lg:w-32 h-20 md:h-24 lg:h-32 bg-white/10 rounded-full translate-y-10 md:translate-y-12 lg:translate-y-16 -translate-x-10 md:-translate-x-12 lg:-translate-x-16"></div>
 
-            <p className="text-sm md:text-base lg:text-lg text-slate-600 dark:text-slate-300 max-w-xl lg:max-w-2xl mx-auto leading-relaxed px-4">
-              Take a moment to breathe, reflect, and connect with your inner peace.
-              Your mental health journey is unique and valuable.
-            </p>
-          </div>
-
-          {/* Featured Tavus AI Companion Section */}
-          <div className="mb-12 md:mb-16 lg:mb-20">
-            <div className="relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-xl md:rounded-2xl lg:rounded-3xl p-4 md:p-6 lg:p-10 text-white shadow-2xl overflow-hidden animate-tavus-glow">
-              {/* Background decorations */}
-              <div className="absolute top-0 right-0 w-24 md:w-32 lg:w-40 h-24 md:h-32 lg:h-40 bg-white/10 rounded-full -translate-y-12 md:-translate-y-16 lg:-translate-y-20 translate-x-12 md:translate-x-16 lg:translate-x-20"></div>
-              <div className="absolute bottom-0 left-0 w-20 md:w-24 lg:w-32 h-20 md:h-24 lg:h-32 bg-white/10 rounded-full translate-y-10 md:translate-y-12 lg:translate-y-16 -translate-x-10 md:-translate-x-12 lg:-translate-x-16"></div>
-
-              <div className="relative z-10">
-                <div className="flex flex-col lg:flex-row items-center justify-between">
-                  <div className="flex-1 text-center lg:text-left mb-6 lg:mb-0">
-                    <div className="flex flex-col md:flex-row items-center justify-center lg:justify-start mb-4 md:mb-6">
-                      <div className="w-12 md:w-14 lg:w-16 h-12 md:h-14 lg:h-16 bg-white/20 rounded-xl lg:rounded-2xl flex items-center justify-center mb-3 md:mb-0 md:mr-4 lg:mr-6 backdrop-blur-sm">
-                        <svg className="w-6 md:w-7 lg:w-8 h-6 md:h-7 lg:h-8" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                        </svg>
+                <div className="relative z-10">
+                  <div className="flex flex-col lg:flex-row items-center justify-between">
+                    <div className="flex-1 text-center lg:text-left mb-6 lg:mb-0">
+                      <div className="flex flex-col md:flex-row items-center justify-center lg:justify-start mb-4 md:mb-6">
+                        <div className="w-12 md:w-14 lg:w-16 h-12 md:h-14 lg:h-16 bg-white/20 rounded-xl lg:rounded-2xl flex items-center justify-center mb-3 md:mb-0 md:mr-4 lg:mr-6 backdrop-blur-sm">
+                          <svg className="w-6 md:w-7 lg:w-8 h-6 md:h-7 lg:h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2">Tavus AI Companion</h3>
+                          <div className="flex items-center justify-center lg:justify-start text-indigo-100">
+                            <div className="w-2 md:w-3 h-2 md:h-3 bg-pink-300 rounded-full animate-pulse mr-2 md:mr-3"></div>
+                            <span className="text-xs md:text-sm lg:text-base">Interactive Video AI • Real-time</span>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2">Tavus AI Companion</h3>
-                        <div className="flex items-center justify-center lg:justify-start text-indigo-100">
-                          <div className="w-2 md:w-3 h-2 md:h-3 bg-pink-300 rounded-full animate-pulse mr-2 md:mr-3"></div>
-                          <span className="text-xs md:text-sm lg:text-base">Interactive Video AI • Real-time</span>
+
+                      <p className="text-indigo-50 mb-4 md:mb-6 lg:mb-8 text-sm md:text-base lg:text-lg leading-relaxed max-w-xl lg:max-w-2xl mx-auto lg:mx-0">
+                        Experience the future of mental health support with our lifelike AI companion.
+                        Engage in natural video conversations with personalized emotional intelligence.
+                      </p>
+
+                      <div className="flex flex-col md:flex-row items-center justify-center lg:justify-start space-y-3 md:space-y-0 md:space-x-4 lg:space-x-6">
+                        <button
+                          onClick={() => {
+                            console.log('Tavus button clicked')
+                            const event = new CustomEvent('openTavusWidget')
+                            window.dispatchEvent(event)
+                            toast.info('Opening Tavus AI...')
+                          }}
+                          className="w-full md:w-auto bg-white text-indigo-600 px-4 md:px-6 lg:px-8 py-3 md:py-3 lg:py-4 rounded-xl lg:rounded-2xl font-semibold hover:bg-indigo-50 btn-cool flex items-center justify-center space-x-2 md:space-x-3 shadow-lg"
+                        >
+                          <svg className="w-4 md:w-5 lg:w-6 h-4 md:h-5 lg:h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                          <span className="text-sm md:text-base">Start AI Session</span>
+                        </button>
+
+                        <div className="flex items-center space-x-3 md:space-x-4 text-indigo-100 text-xs md:text-sm">
+                          <div className="flex items-center">
+                            <svg className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                            <span>Real-time AI</span>
+                          </div>
+                          <div className="flex items-center">
+                            <svg className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>Video AI</span>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    <p className="text-indigo-50 mb-4 md:mb-6 lg:mb-8 text-sm md:text-base lg:text-lg leading-relaxed max-w-xl lg:max-w-2xl mx-auto lg:mx-0">
-                      Experience the future of mental health support with our lifelike AI companion.
-                      Engage in natural video conversations with personalized emotional intelligence.
-                    </p>
-
-                    <div className="flex flex-col md:flex-row items-center justify-center lg:justify-start space-y-3 md:space-y-0 md:space-x-4 lg:space-x-6">
-                      <button
-                        onClick={() => {
-                          console.log('Tavus button clicked')
-                          const event = new CustomEvent('openTavusWidget')
-                          window.dispatchEvent(event)
-                          toast.info('Opening Tavus AI...')
-                        }}
-                        className="w-full md:w-auto bg-white text-indigo-600 px-4 md:px-6 lg:px-8 py-3 md:py-3 lg:py-4 rounded-xl lg:rounded-2xl font-semibold hover:bg-indigo-50 btn-cool flex items-center justify-center space-x-2 md:space-x-3 shadow-lg"
-                      >
-                        <svg className="w-4 md:w-5 lg:w-6 h-4 md:h-5 lg:h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <div className="hidden xl:block ml-8 lg:ml-10">
+                      <div className="w-28 lg:w-32 xl:w-40 h-28 lg:h-32 xl:h-40 bg-white/10 rounded-2xl lg:rounded-3xl flex items-center justify-center backdrop-blur-sm">
+                        <svg className="w-14 lg:w-16 xl:w-20 h-14 lg:h-16 xl:h-20" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M8 5v14l11-7z" />
                         </svg>
-                        <span className="text-sm md:text-base">Start AI Session</span>
-                      </button>
-
-                      <div className="flex items-center space-x-3 md:space-x-4 text-indigo-100 text-xs md:text-sm">
-                        <div className="flex items-center">
-                          <svg className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                          </svg>
-                          <span>Real-time AI</span>
-                        </div>
-                        <div className="flex items-center">
-                          <svg className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          <span>Video AI</span>
-                        </div>
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
 
-                  <div className="hidden xl:block ml-8 lg:ml-10">
-                    <div className="w-28 lg:w-32 xl:w-40 h-28 lg:h-32 xl:h-40 bg-white/10 rounded-2xl lg:rounded-3xl flex items-center justify-center backdrop-blur-sm">
-                      <svg className="w-14 lg:w-16 xl:w-20 h-14 lg:h-16 xl:h-20" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
+            {/* AI Assistants Grid */}
+            <div className="mb-12 md:mb-16 lg:mb-20">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white mb-3">
+                  AI-Powered Support
+                </h2>
+                <p className="text-sm md:text-base text-slate-600 dark:text-slate-300">
+                  Choose your preferred way to connect with our AI wellness assistants
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* ElevenLabs Voice Therapy */}
+                <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-6 text-white shadow-xl hover-lift">
+                  <div className="flex items-center mb-4">
+                    <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3 backdrop-blur-sm">
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4z" />
+                        <path d="M5.5 9.643a.75.75 0 00-1.5 0V10c0 3.06 2.29 5.585 5.25 5.954V17.5h-1.5a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-1.5v-1.546A6.001 6.001 0 0016 10v-.357a.75.75 0 00-1.5 0V10a4.5 4.5 0 01-9 0v-.357z" />
                       </svg>
                     </div>
+                    <div>
+                      <h3 className="text-lg font-bold">Voice Therapy</h3>
+                      <p className="text-emerald-100 text-sm">ElevenLabs AI</p>
+                    </div>
+                  </div>
+                  <p className="text-emerald-50 text-sm mb-4 leading-relaxed">
+                    Natural voice conversations with advanced speech AI for therapeutic support and guidance.
+                  </p>
+                  <div className="space-y-2">
+                    <button
+                      onClick={startVoiceSession}
+                      className="w-full bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-lg font-medium transition-colors backdrop-blur-sm"
+                    >
+                      Start Voice Session
+                    </button>
+                    <button
+                      onClick={() => {
+                        console.log('Direct ElevenLabs test button clicked')
+                        const event = new CustomEvent('startElevenLabsVoice')
+                        window.dispatchEvent(event)
+                        toast.info('Debug: ElevenLabs event dispatched')
+                      }}
+                      className="w-full bg-white/10 hover:bg-white/20 text-white py-1 px-3 rounded text-xs transition-colors backdrop-blur-sm"
+                    >
+                      🔧 Test ElevenLabs
+                    </button>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
 
-          {/* AI Assistants Grid */}
-          <div className="mb-12 md:mb-16 lg:mb-20">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white mb-3">
-                AI-Powered Support
-              </h2>
-              <p className="text-sm md:text-base text-slate-600 dark:text-slate-300">
-                Choose your preferred way to connect with our AI wellness assistants
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* ElevenLabs Voice Therapy */}
-              <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-6 text-white shadow-xl hover-lift">
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3 backdrop-blur-sm">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4z" />
-                      <path d="M5.5 9.643a.75.75 0 00-1.5 0V10c0 3.06 2.29 5.585 5.25 5.954V17.5h-1.5a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-1.5v-1.546A6.001 6.001 0 0016 10v-.357a.75.75 0 00-1.5 0V10a4.5 4.5 0 01-9 0v-.357z" />
-                    </svg>
+                {/* Text Chat Assistant */}
+                <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-6 text-white shadow-xl hover-lift">
+                  <div className="flex items-center mb-4">
+                    <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3 backdrop-blur-sm">
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold">Chat Assistant</h3>
+                      <p className="text-blue-100 text-sm">Text-based AI</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-bold">Voice Therapy</h3>
-                    <p className="text-emerald-100 text-sm">ElevenLabs AI</p>
-                  </div>
-                </div>
-                <p className="text-emerald-50 text-sm mb-4 leading-relaxed">
-                  Natural voice conversations with advanced speech AI for therapeutic support and guidance.
-                </p>
-                <div className="space-y-2">
-                  <button
-                    onClick={startVoiceSession}
-                    className="w-full bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-lg font-medium transition-colors backdrop-blur-sm"
-                  >
-                    Start Voice Session
-                  </button>
+                  <p className="text-blue-50 text-sm mb-4 leading-relaxed">
+                    Instant text-based support for quick questions, mood tracking, and mental health guidance.
+                  </p>
                   <button
                     onClick={() => {
-                      console.log('Direct ElevenLabs test button clicked')
-                      const event = new CustomEvent('startElevenLabsVoice')
+                      const event = new CustomEvent('openChatBot')
                       window.dispatchEvent(event)
-                      toast.info('Debug: ElevenLabs event dispatched')
                     }}
-                    className="w-full bg-white/10 hover:bg-white/20 text-white py-1 px-3 rounded text-xs transition-colors backdrop-blur-sm"
+                    className="w-full bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-lg font-medium transition-colors backdrop-blur-sm"
                   >
-                    🔧 Test ElevenLabs
+                    Open Chat
                   </button>
                 </div>
               </div>
+            </div>
 
-              {/* Text Chat Assistant */}
-              <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-6 text-white shadow-xl hover-lift">
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3 backdrop-blur-sm">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
+            {/* Daily Affirmation */}
+            <div className="mb-12 md:mb-16 lg:mb-20">
+              <div className="bg-white dark:bg-slate-800 rounded-xl md:rounded-2xl lg:rounded-3xl shadow-xl p-4 md:p-6 lg:p-10 border border-gray-100 dark:border-slate-700">
+                <div className="text-center">
+                  <div className="inline-flex items-center px-3 md:px-4 lg:px-6 py-2 md:py-2 lg:py-3 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-xl lg:rounded-2xl text-xs md:text-sm font-medium mb-4 md:mb-6 lg:mb-8">
+                    <svg className="w-3 md:w-4 lg:w-5 h-3 md:h-4 lg:h-5 mr-2 md:mr-2 lg:mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
+                    Today's Personal Affirmation
                   </div>
-                  <div>
-                    <h3 className="text-lg font-bold">Chat Assistant</h3>
-                    <p className="text-blue-100 text-sm">Text-based AI</p>
+
+                  <div className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-slate-800 dark:text-white mb-6 md:mb-8 lg:mb-10 min-h-[3rem] md:min-h-[4rem] lg:min-h-[5rem] flex items-center justify-center px-4">
+                    {loading ? (
+                      <div className="animate-pulse text-slate-400 text-base md:text-lg lg:text-xl">Loading your personalized affirmation...</div>
+                    ) : (
+                      <span className="leading-relaxed text-center max-w-2xl md:max-w-3xl lg:max-w-4xl">{affirmation}</span>
+                    )}
                   </div>
+
+                  <button
+                    onClick={nextAffirmation}
+                    disabled={loading}
+                    className="w-full md:w-auto bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 md:px-6 lg:px-10 py-3 md:py-3 lg:py-4 rounded-xl lg:rounded-2xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 md:space-x-3 mx-auto shadow-lg hover:shadow-xl"
+                  >
+                    <svg className="w-4 md:w-5 lg:w-6 h-4 md:h-5 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span className="text-sm md:text-base">Generate New Affirmation</span>
+                  </button>
                 </div>
-                <p className="text-blue-50 text-sm mb-4 leading-relaxed">
-                  Instant text-based support for quick questions, mood tracking, and mental health guidance.
-                </p>
-                <button
-                  onClick={() => {
-                    const event = new CustomEvent('openChatBot')
-                    window.dispatchEvent(event)
-                  }}
-                  className="w-full bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-lg font-medium transition-colors backdrop-blur-sm"
-                >
-                  Open Chat
-                </button>
+              </div>
+            </div>
+
+            {/* Wellness Journey */}
+            <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 rounded-xl md:rounded-2xl lg:rounded-3xl p-4 md:p-6 lg:p-8 text-white shadow-lg">
+              <div className="flex flex-col lg:flex-row items-center justify-between">
+                <div className="flex-1 text-center lg:text-left mb-4 lg:mb-0">
+                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-3 md:mb-4">Your Wellness Journey</h3>
+                  <p className="text-amber-100 mb-4 md:mb-6 lg:mb-8 text-sm md:text-base lg:text-lg leading-relaxed">
+                    Every step you take towards better mental health matters.
+                    Track your progress and celebrate your growth.
+                  </p>
+                  <button
+                    onClick={() => handleNavigation('journal', '/journal')}
+                    className="w-full md:w-auto bg-white text-amber-600 px-4 md:px-6 lg:px-8 py-3 md:py-3 lg:py-4 rounded-xl lg:rounded-2xl font-semibold hover:bg-amber-50 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
+                    View Your Progress
+                  </button>
+                </div>
+                <div className="hidden lg:block ml-6 lg:ml-8 text-4xl lg:text-6xl xl:text-8xl opacity-20">
+                  📈
+                </div>
               </div>
             </div>
           </div>
+        </main>
 
-          {/* Daily Affirmation */}
-          <div className="mb-12 md:mb-16 lg:mb-20">
-            <div className="bg-white dark:bg-slate-800 rounded-xl md:rounded-2xl lg:rounded-3xl shadow-xl p-4 md:p-6 lg:p-10 border border-gray-100 dark:border-slate-700">
-              <div className="text-center">
-                <div className="inline-flex items-center px-3 md:px-4 lg:px-6 py-2 md:py-2 lg:py-3 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-xl lg:rounded-2xl text-xs md:text-sm font-medium mb-4 md:mb-6 lg:mb-8">
-                  <svg className="w-3 md:w-4 lg:w-5 h-3 md:h-4 lg:h-5 mr-2 md:mr-2 lg:mr-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Today's Personal Affirmation
-                </div>
-
-                <div className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-slate-800 dark:text-white mb-6 md:mb-8 lg:mb-10 min-h-[3rem] md:min-h-[4rem] lg:min-h-[5rem] flex items-center justify-center px-4">
-                  {loading ? (
-                    <div className="animate-pulse text-slate-400 text-base md:text-lg lg:text-xl">Loading your personalized affirmation...</div>
-                  ) : (
-                    <span className="leading-relaxed text-center max-w-2xl md:max-w-3xl lg:max-w-4xl">{affirmation}</span>
-                  )}
-                </div>
-
-                <button
-                  onClick={nextAffirmation}
-                  disabled={loading}
-                  className="w-full md:w-auto bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 md:px-6 lg:px-10 py-3 md:py-3 lg:py-4 rounded-xl lg:rounded-2xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 md:space-x-3 mx-auto shadow-lg hover:shadow-xl"
-                >
-                  <svg className="w-4 md:w-5 lg:w-6 h-4 md:h-5 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                  </svg>
-                  <span className="text-sm md:text-base">Generate New Affirmation</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-
-
-          {/* Wellness Journey */}
-          <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 rounded-xl md:rounded-2xl lg:rounded-3xl p-4 md:p-6 lg:p-8 text-white shadow-lg">
-            <div className="flex flex-col lg:flex-row items-center justify-between">
-              <div className="flex-1 text-center lg:text-left mb-4 lg:mb-0">
-                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-3 md:mb-4">Your Wellness Journey</h3>
-                <p className="text-amber-100 mb-4 md:mb-6 lg:mb-8 text-sm md:text-base lg:text-lg leading-relaxed">
-                  Every step you take towards better mental health matters.
-                  Track your progress and celebrate your growth.
-                </p>
-                <button
-                  onClick={() => handleNavigation('journal', '/journal')}
-                  className="w-full md:w-auto bg-white text-amber-600 px-4 md:px-6 lg:px-8 py-3 md:py-3 lg:py-4 rounded-xl lg:rounded-2xl font-semibold hover:bg-amber-50 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
-                >
-                  View Your Progress
-                </button>
-              </div>
-              <div className="hidden lg:block ml-6 lg:ml-8 text-4xl lg:text-6xl xl:text-8xl opacity-20">
-                📈
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-
-      {/* Debug Panel */}
-      <div className="fixed top-20 right-4 bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg border z-50">
-        <h4 className="text-sm font-bold mb-2">Debug Panel</h4>
-        <div className="space-y-2">
-          <button
-            onClick={() => {
-              console.log('Debug: Testing ElevenLabs')
-              const event = new CustomEvent('startElevenLabsVoice')
-              window.dispatchEvent(event)
-              toast.info('ElevenLabs event sent')
-            }}
-            className="w-full bg-emerald-500 text-white px-3 py-1 rounded text-xs"
-          >
-            Test ElevenLabs
-          </button>
-          <button
-            onClick={() => {
-              console.log('Debug: Testing Tavus')
-              const event = new CustomEvent('openTavusWidget')
-              window.dispatchEvent(event)
-              toast.info('Tavus event sent')
-            }}
-            className="w-full bg-indigo-500 text-white px-3 py-1 rounded text-xs"
-          >
-            Test Tavus
-          </button>
-        </div>
+        {/* AI Assistants */}
+        <TavusWidget />
+        <ElevenLabsWidget />
+        <ChatBot />
       </div>
-
-      {/* AI Assistants */}
-      <TavusWidget />
-      <ElevenLabsWidget />
-      <ChatBot />
-    </div>
   )
 }
