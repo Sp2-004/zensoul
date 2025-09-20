@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 
-// Define interfaces for step types
 interface BreathingStep {
   label: string
   seconds: number
@@ -33,88 +32,62 @@ const initialExercises: Exercise[] = [
     key: "breathing-478",
     type: "breathing",
     title: "4-7-8 Breathing",
-    description: "A calming breathing technique to ease anxiety.",
+    description: "A calming breathing technique to ease anxiety and promote relaxation.",
     steps: [
-      { label: "Inhale", seconds: 4, instruction: "Breathe in deeply for 4 seconds", scale: 1.3, color: "#6ee7b7" },
-      { label: "Hold", seconds: 7, instruction: "Hold your breath for 7 seconds", scale: 1.5, color: "#fcd34d" },
-      { label: "Exhale", seconds: 8, instruction: "Exhale slowly for 8 seconds", scale: 1.0, color: "#f87171" },
+      { label: "Inhale", seconds: 4, instruction: "Breathe in deeply through your nose", scale: 1.3, color: "#10b981" },
+      { label: "Hold", seconds: 7, instruction: "Hold your breath gently", scale: 1.5, color: "#f59e0b" },
+      { label: "Exhale", seconds: 8, instruction: "Exhale slowly through your mouth", scale: 1.0, color: "#3b82f6" },
     ],
-    note: "This method promotes relaxation and stress relief.",
+    note: "This technique activates your parasympathetic nervous system for deep relaxation.",
   },
   {
     key: "grounding-54321",
     type: "grounding",
     title: "5-4-3-2-1 Grounding",
-    description: "A sensory exercise to anchor you in the present.",
+    description: "A sensory exercise to anchor you in the present moment and reduce anxiety.",
     steps: [
-      { label: "5 Sights", instruction: "Notice five things you see.", prompt: "I see..." },
-      { label: "4 Touches", instruction: "Feel four things around you.", prompt: "I feel..." },
-      { label: "3 Sounds", instruction: "Listen for three distinct sounds.", prompt: "I hear..." },
-      { label: "2 Smells", instruction: "Identify two smells or recall them.", prompt: "I smell..." },
-      { label: "1 Taste", instruction: "Focus on one taste or memory of it.", prompt: "I taste..." },
+      { label: "5 Things You See", instruction: "Look around and notice five things you can see.", prompt: "I can see..." },
+      { label: "4 Things You Touch", instruction: "Feel four different textures around you.", prompt: "I can feel..." },
+      { label: "3 Things You Hear", instruction: "Listen for three distinct sounds.", prompt: "I can hear..." },
+      { label: "2 Things You Smell", instruction: "Identify two scents or recall pleasant ones.", prompt: "I can smell..." },
+      { label: "1 Thing You Taste", instruction: "Focus on one taste in your mouth.", prompt: "I can taste..." },
     ],
   },
 ]
 
-function FloatingShapes() {
-  return (
-    <svg className="fixed inset-0 w-full h-full z-0 pointer-events-none" aria-hidden="true">
-      <defs>
-        <radialGradient id="grad1" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" style={{ stopColor: "#bfdbfe", stopOpacity: 0.3 }} />
-          <stop offset="100%" style={{ stopColor: "#bfdbfe", stopOpacity: 0 }} />
-        </radialGradient>
-        <radialGradient id="grad2" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" style={{ stopColor: "#fbcfe8", stopOpacity: 0.25 }} />
-          <stop offset="100%" style={{ stopColor: "#fbcfe8", stopOpacity: 0 }} />
-        </radialGradient>
-      </defs>
-      <motion.ellipse
-        cx="20%" cy="30%" rx="200" ry="80"
-        fill="url(#grad1)"
-        animate={{ cy: ["30%", "50%", "30%"] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.ellipse
-        cx="75%" cy="25%" rx="160" ry="70"
-        fill="url(#grad2)"
-        animate={{ cy: ["25%", "45%", "25%"] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-      />
-    </svg>
-  )
-}
-
 function BreathingStepCircle({ timer, step, isStarted, onStart, title }: any) {
   return (
     <motion.div
-      className="flex flex-col items-center mb-6"
+      className="flex flex-col items-center mb-8"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
       <div className="relative flex items-center justify-center">
         <motion.div
-          className="absolute w-64 h-64 rounded-full"
-          style={{ background: `radial-gradient(circle, ${step.color}33 0%, transparent 70%)` }}
-          animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.7, 0.5] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute w-80 h-80 rounded-full"
+          style={{ background: `radial-gradient(circle, ${step.color}20 0%, transparent 70%)` }}
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="relative flex items-center justify-center rounded-full shadow-xl"
+          className="relative flex items-center justify-center rounded-full shadow-2xl backdrop-blur-sm"
           style={{
-            width: 180,
-            height: 180,
-            background: step.color,
-            border: `8px solid ${step.color}cc`,
+            width: 200,
+            height: 200,
+            background: `linear-gradient(135deg, ${step.color}dd, ${step.color}aa)`,
+            border: `4px solid ${step.color}`,
           }}
-          animate={{ scale: step.scale, boxShadow: `0 0 40px ${step.color}66` }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          animate={{ 
+            scale: step.scale, 
+            boxShadow: `0 0 60px ${step.color}40, 0 0 100px ${step.color}20` 
+          }}
+          transition={{ duration: 1, ease: "easeInOut" }}
           onClick={!isStarted ? onStart : undefined}
         >
           {!isStarted ? (
             <motion.button
-              className="px-8 py-3 rounded-full bg-white text-gray-900 font-semibold text-lg shadow-lg hover:bg-gray-100"
+              className="px-8 py-4 rounded-2xl bg-white/90 text-slate-800 font-bold text-xl shadow-lg hover:bg-white transition-all duration-200"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onStart}
@@ -124,8 +97,8 @@ function BreathingStepCircle({ timer, step, isStarted, onStart, title }: any) {
             </motion.button>
           ) : (
             <motion.span
-              className="text-5xl font-bold text-white"
-              style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.2))" }}
+              className="text-4xl font-bold text-white"
+              style={{ filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.3))" }}
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               key={timer}
@@ -137,13 +110,19 @@ function BreathingStepCircle({ timer, step, isStarted, onStart, title }: any) {
         </motion.div>
       </div>
       <motion.div
-        className="mt-4 text-xl font-medium text-center"
-        style={{ color: step.color }}
+        className="mt-6 text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        {isStarted ? step.label : title}
+        <div className="text-xl font-bold text-slate-800 dark:text-white mb-2">
+          {isStarted ? step.label : title}
+        </div>
+        {isStarted && (
+          <div className="text-base text-slate-600 dark:text-slate-300">
+            {step.instruction}
+          </div>
+        )}
       </motion.div>
     </motion.div>
   )
@@ -153,7 +132,6 @@ export default function AnxietyGuidePage() {
   const router = useRouter()
   const [exerciseIndex, setExerciseIndex] = useState(0)
   const [breathStep, setBreathStep] = useState(0)
-  // Use type assertion for initial timer value
   const [timer, setTimer] = useState((initialExercises[0].steps[0] as BreathingStep).seconds)
   const [isBreathingStarted, setIsBreathingStarted] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
@@ -172,19 +150,19 @@ export default function AnxietyGuidePage() {
   const isGrounding = currentExercise.type === "grounding" || currentExercise.type === "visualization" || currentExercise.type === "mindfulness"
 
   useEffect(() => {
-  if (!isBreathing || !isBreathingStarted || isPaused) return;
-  intervalRef.current = setInterval(() => {
-    setTimer((t) => {
-      if (t > 1) return t - 1;
-      clearInterval(intervalRef.current);
-      setTimeout(() => {
-        setBreathStep((s) => (s + 1) % currentExercise.steps.length);
-      }, 400);
-      return 0;
-    });
-  }, 1000);
-  return () => clearInterval(intervalRef.current);
-}, [breathStep, isBreathing, isBreathingStarted, isPaused, currentExercise.steps]);
+    if (!isBreathing || !isBreathingStarted || isPaused) return;
+    intervalRef.current = setInterval(() => {
+      setTimer((t) => {
+        if (t > 1) return t - 1;
+        clearInterval(intervalRef.current);
+        setTimeout(() => {
+          setBreathStep((s) => (s + 1) % currentExercise.steps.length);
+        }, 400);
+        return 0;
+      });
+    }, 1000);
+    return () => clearInterval(intervalRef.current);
+  }, [breathStep, isBreathing, isBreathingStarted, isPaused, currentExercise.steps]);
 
   useEffect(() => {
     if (isBreathing) {
@@ -265,13 +243,10 @@ export default function AnxietyGuidePage() {
       preferredType = preferredType === 'visualization' ? 'mindfulness' : preferredType
     } else if (moodLower.includes('anxious') || moodLower.includes('restless')) {
       preferredType = preferredType === 'breathing' ? 'grounding' : preferredType
-    } else if (moodLower.includes('tense') || moodLower.includes('tight')) {
-      preferredType = preferredType === 'breathing' ? 'mindfulness' : preferredType
-    } else if (moodLower.includes('scared') || moodLower.includes('afraid')) {
-      preferredType = preferredType === 'breathing' ? 'visualization' : preferredType
     }
 
-    const prompt = `Based on the user's feeling: "${userMood}". Suggest a unique anxiety relief exercise of type "${preferredType}", different from "4-7-8 Breathing" and "5-4-3-2-1 Grounding". For breathing, each step must include label, seconds (number), instruction, scale (number like 1.3), color (hex like "#6ee7b7"). For others, each step must include label, instruction, prompt. Include a short tip (50 characters or less). Respond strictly with a JSON object: {"key": "custom", "type": "${preferredType}", "title": "Title here", "description": "Description here", "steps": [array of step objects], "note": "Optional note", "tips": "Short tip"}`
+    const prompt = `Based on the user's feeling: "${userMood}". Suggest a unique anxiety relief exercise of type "${preferredType}", different from "4-7-8 Breathing" and "5-4-3-2-1 Grounding". For breathing, each step must include label, seconds (number), instruction, scale (number like 1.3), color (hex like "#10b981"). For others, each step must include label, instruction, prompt. Include a short tip (50 characters or less). Respond strictly with a JSON object: {"key": "custom", "type": "${preferredType}", "title": "Title here", "description": "Description here", "steps": [array of step objects], "note": "Optional note", "tips": "Short tip"}`
+    
     const response = await callGeminiAPI(prompt)
     try {
       const cleanedResponse = cleanApiResponse(response)
@@ -306,241 +281,321 @@ export default function AnxietyGuidePage() {
     const responsesText = Object.values(groundingResponses).join('\n')
     if (!responsesText.trim()) return
     setIsLoading(true)
-    const prompt = `Analyze the user's responses in the "${currentExercise.title}" exercise: "${responsesText}". Provide concise positive feedback and 2-3 psychological suggestions for anxiety relief based on their input. For visualization exercises, suggest alternatives (e.g., sensory anchors, daily integrations) for when the user can't access their peaceful place. Return plain text with one positive feedback sentence and bullet points for suggestions.`
+    const prompt = `Analyze the user's responses in the "${currentExercise.title}" exercise: "${responsesText}". Provide concise positive feedback and 2-3 psychological suggestions for anxiety relief based on their input. Return plain text with one positive feedback sentence and bullet points for suggestions.`
     const response = await callGeminiAPI(prompt)
     setAiFeedback(formatFeedback(response))
     setIsLoading(false)
   }
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-blue-50 to-pink-50 dark:from-gray-900 dark:to-gray-800">
-      <FloatingShapes />
-      <motion.main
-        className="relative max-w-2xl mx-auto p-8 mt-12 rounded-2xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <motion.button
-          className="mb-6 px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-200 hover:bg-blue-100 dark:hover:bg-gray-600 font-semibold"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => router.push('/')}
-          aria-label="Back to Home"
-        >
-          Back to Home
-        </motion.button>
-
-        <h1 className="text-4xl font-bold mb-6 text-center text-gray-900 dark:text-white">
-          AI-Guided Anxiety Relief
-        </h1>
-
-        <section className="mb-8">
-          <label className="block text-lg font-medium mb-2 text-gray-900 dark:text-white">
-            How are you feeling? (Describe your anxiety)
-          </label>
-          <div className="flex gap-4">
-            <input
-              className="flex-1 p-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 transition"
-              placeholder="E.g., I'm feeling overwhelmed and stressed..."
-              value={userMood}
-              onChange={(e) => setUserMood(e.target.value)}
-            />
-            <motion.button
-              className="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold disabled:opacity-50"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={getAiRecommendation}
-              disabled={isLoading || !userMood.trim()}
-            >
-              {isLoading ? 'Loading...' : 'Get AI Suggestion'}
-            </motion.button>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-slate-50 dark:from-slate-900 dark:via-gray-900 dark:to-slate-800">
+      {/* Navigation */}
+      <div className="fixed top-8 left-1/2 transform -translate-x-1/2 z-50">
+        <nav className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-2xl px-8 py-4 shadow-2xl border border-gray-200/50 dark:border-slate-700/50">
+          <div className="flex items-center space-x-8">
+            <div className="text-slate-800 dark:text-white font-bold text-xl">ZenSoul</div>
+            <div className="flex items-center space-x-6">
+              <button
+                onClick={() => router.push('/')}
+                className="flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-200"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                </svg>
+                <span>Home</span>
+              </button>
+              <div className="bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-white px-4 py-2 rounded-xl text-sm font-medium shadow-sm">
+                <svg className="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"/>
+                </svg>
+                Wellness Guide
+              </div>
+            </div>
           </div>
-          {aiTips && (
-            <motion.p
-              className="mt-4 text-gray-700 dark:text-gray-300"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-            >
-              AI Tips: {aiTips}
-            </motion.p>
-          )}
-        </section>
-        
-        <nav className="flex justify-center mb-8 space-x-4">
-          {customExercises.map((ex, idx) => (
-            <motion.button
-              key={ex.key}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                exerciseIndex === idx
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-200 hover:bg-blue-100 dark:hover:bg-gray-600"
-              }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setExerciseIndex(idx)}
-              aria-current={exerciseIndex === idx ? "page" : undefined}
-            >
-              {ex.title}
-            </motion.button>
-          ))}
         </nav>
-        
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentExercise.key}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <h2 className="text-2xl font-semibold mb-3 text-center text-gray-900 dark:text-white">
-              {currentExercise.title}
-            </h2>
-            <p className="mb-8 text-center text-gray-600 dark:text-gray-300">
-              {currentExercise.description}
-            </p>
+      </div>
 
-            {isBreathing && (
-              <section className="mb-8">
-                <BreathingStepCircle
-                  timer={timer}
-                  step={currentExercise.steps[breathStep] as BreathingStep}
-                  isStarted={isBreathingStarted}
-                  onStart={() => setIsBreathingStarted(true)}
-                  title={currentExercise.title}
-                />
-                <motion.p
-                  className="text-center text-lg text-gray-700 dark:text-gray-300"
+      <div className="pt-32 px-8">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h1 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-4">
+              AI-Guided
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-blue-600 to-purple-600 mt-1">
+                Anxiety Relief
+              </span>
+            </h1>
+            <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+              Personalized breathing exercises and grounding techniques powered by AI to help you find calm and peace.
+            </p>
+          </div>
+
+          {/* AI Mood Input */}
+          <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl p-8 mb-12 border border-gray-100 dark:border-slate-700">
+            <div className="flex items-center mb-6">
+              <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-2xl flex items-center justify-center text-white text-2xl mr-4">
+                🤖
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-white">AI Personalization</h2>
+                <p className="text-slate-600 dark:text-slate-300">Tell me how you're feeling for a customized exercise</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <input
+                className="flex-1 px-6 py-4 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-800 dark:text-white placeholder-slate-400"
+                placeholder="E.g., I'm feeling overwhelmed and stressed about work..."
+                value={userMood}
+                onChange={(e) => setUserMood(e.target.value)}
+              />
+              <motion.button
+                className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-blue-500 text-white rounded-2xl font-semibold disabled:opacity-50 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={getAiRecommendation}
+                disabled={isLoading || !userMood.trim()}
+              >
+                {isLoading ? (
+                  <div className="flex items-center space-x-2">
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Creating...</span>
+                  </div>
+                ) : (
+                  'Get AI Exercise'
+                )}
+              </motion.button>
+            </div>
+            
+            {aiTips && (
+              <motion.div
+                className="mt-6 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl border border-emerald-200 dark:border-emerald-800"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <div className="flex items-center space-x-2 text-emerald-800 dark:text-emerald-200">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
+                  </svg>
+                  <span className="font-semibold">AI Tip:</span>
+                  <span>{aiTips}</span>
+                </div>
+              </motion.div>
+            )}
+          </div>
+          
+          {/* Exercise Navigation */}
+          <div className="flex justify-center mb-12">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl p-2 shadow-lg border border-gray-100 dark:border-slate-700">
+              <div className="flex space-x-2">
+                {customExercises.map((ex, idx) => (
+                  <motion.button
+                    key={ex.key}
+                    className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 ${
+                      exerciseIndex === idx
+                        ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
+                        : "text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700"
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setExerciseIndex(idx)}
+                    aria-current={exerciseIndex === idx ? "page" : undefined}
+                  >
+                    {ex.title}
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          {/* Exercise Content */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentExercise.key}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+              className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl p-8 mb-12 border border-gray-100 dark:border-slate-700"
+            >
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">
+                  {currentExercise.title}
+                </h2>
+                <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+                  {currentExercise.description}
+                </p>
+              </div>
+
+              {isBreathing && (
+                <div className="text-center">
+                  <BreathingStepCircle
+                    timer={timer}
+                    step={currentExercise.steps[breathStep] as BreathingStep}
+                    isStarted={isBreathingStarted}
+                    onStart={() => setIsBreathingStarted(true)}
+                    title={currentExercise.title}
+                  />
+                  
+                  {isBreathingStarted && (
+                    <div className="flex justify-center gap-4 mt-8">
+                      <motion.button
+                        className="px-6 py-3 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white rounded-xl font-semibold disabled:opacity-50 hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => {
+                          clearInterval(intervalRef.current)
+                          setBreathStep((s) => Math.max(s - 1, 0))
+                        }}
+                        disabled={breathStep === 0}
+                      >
+                        Previous
+                      </motion.button>
+                      <motion.button
+                        className="px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handlePause}
+                      >
+                        {isPaused ? "Resume" : "Pause"}
+                      </motion.button>
+                      <motion.button
+                        className="px-6 py-3 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white rounded-xl font-semibold disabled:opacity-50 hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => {
+                          clearInterval(intervalRef.current)
+                          setBreathStep((s) => Math.min(s + 1, currentExercise.steps.length - 1))
+                        }}
+                        disabled={breathStep === currentExercise.steps.length - 1}
+                      >
+                        Next
+                      </motion.button>
+                    </div>
+                  )}
+                  
+                  {currentExercise.note && (
+                    <p className="mt-8 text-slate-500 dark:text-slate-400 text-center italic">
+                      {currentExercise.note}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {isGrounding && (
+                <motion.div
+                  className="max-w-2xl mx-auto"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
+                  transition={{ duration: 0.4 }}
                 >
-                  {isBreathingStarted ? currentExercise.steps[breathStep].instruction : "Tap Start to begin."}
-                </motion.p>
-                {isBreathingStarted && (
-                  <div className="flex justify-center gap-4 mt-6">
+                  <div className="mb-8">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-2xl font-bold text-slate-800 dark:text-white">
+                        {currentExercise.steps[groundStep].label}
+                      </h3>
+                      <span className="text-sm text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">
+                        {groundStep + 1} of {currentExercise.steps.length}
+                      </span>
+                    </div>
+                    <p className="text-lg text-slate-600 dark:text-slate-300 mb-6">
+                      {currentExercise.steps[groundStep].instruction}
+                    </p>
+                    
+                    <div className="relative">
+                      <input
+                        className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-800 dark:text-white placeholder-slate-400"
+                        placeholder={(currentExercise.steps[groundStep] as GroundingStep).prompt}
+                        value={groundingResponses[groundStep] || ""}
+                        onChange={(e) => setGroundingResponses({
+                          ...groundingResponses,
+                          [groundStep]: e.target.value,
+                        })}
+                      />
+                      <AnimatePresence>
+                        {groundingResponses[groundStep]?.trim() && (
+                          <motion.div
+                            className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            exit={{ scale: 0 }}
+                          >
+                            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                            </svg>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between mb-8">
                     <motion.button
-                      className="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold disabled:opacity-50"
+                      className="px-6 py-3 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white rounded-xl font-semibold disabled:opacity-50 hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => {
-                        clearInterval(intervalRef.current)
-                        setBreathStep((s) => Math.max(s - 1, 0))
-                      }}
-                      disabled={breathStep === 0}
+                      onClick={() => setGroundStep((s) => Math.max(s - 1, 0))}
+                      disabled={groundStep === 0}
                     >
                       Previous
                     </motion.button>
                     <motion.button
-                      className="px-6 py-2 rounded-lg bg-yellow-500 text-white font-semibold"
+                      className="px-6 py-3 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white rounded-xl font-semibold disabled:opacity-50 hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={handlePause}
-                    >
-                      {isPaused ? "Resume" : "Pause"}
-                    </motion.button>
-                    <motion.button
-                      className="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold disabled:opacity-50"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => {
-                        clearInterval(intervalRef.current)
-                        setBreathStep((s) => Math.min(s + 1, currentExercise.steps.length - 1))
-                      }}
-                      disabled={breathStep === currentExercise.steps.length - 1}
+                      onClick={() => setGroundStep((s) => Math.min(s + 1, currentExercise.steps.length - 1))}
+                      disabled={groundStep === currentExercise.steps.length - 1}
                     >
                       Next
                     </motion.button>
                   </div>
-                )}
-                <p className="mt-6 text-sm text-gray-500 dark:text-gray-400 text-center">
-                  {currentExercise.note}
-                </p>
-              </section>
-            )}
-
-            {isGrounding && (
-  <motion.section
-    className="mb-8"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 0.4 }}
-  >
-    <label className="block text-lg font-medium mb-2 text-gray-900 dark:text-white">
-      {currentExercise.steps[groundStep].label}
-    </label>
-    <p className="mb-4 text-gray-700 dark:text-gray-300">
-      {currentExercise.steps[groundStep].instruction}
-    </p>
-    <div className="relative">
-      <input
-        className="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 transition"
-        placeholder={(currentExercise.steps[groundStep] as GroundingStep).prompt}
-        value={groundingResponses[groundStep] || ""}
-        onChange={(e) => setGroundingResponses({
-          ...groundingResponses,
-          [groundStep]: e.target.value,
-        })}
-      />
-      <AnimatePresence>
-        {groundingResponses[groundStep]?.trim() && (
-          <motion.span
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-green-500"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0 }}
-          >
-            ✓
-          </motion.span>
-        )}
-      </AnimatePresence>
-    </div>
-    <div className="flex justify-between mt-4">
-      <motion.button
-        className="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold disabled:opacity-50"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setGroundStep((s) => Math.max(s - 1, 0))}
-        disabled={groundStep === 0}
-      >
-        Previous
-      </motion.button>
-      <motion.button
-        className="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold disabled:opacity-50"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setGroundStep((s) => Math.min(s + 1, currentExercise.steps.length - 1))}
-        disabled={groundStep === currentExercise.steps.length - 1}
-      >
-        Next
-      </motion.button>
-    </div>
-    <div className="flex justify-center mt-6">
-      <motion.button
-        className="px-6 py-2 rounded-lg bg-green-600 text-white font-semibold disabled:opacity-50"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={getAiFeedback}
-        disabled={isLoading || Object.keys(groundingResponses).length === 0}
-      >
-        {isLoading ? 'Loading...' : 'Get AI Feedback'}
-      </motion.button>
-    </div>
-    {aiFeedback && (
-      <motion.div
-        className="mt-4 text-gray-700 dark:text-gray-300 whitespace-pre-line"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-      >
-        {aiFeedback}
-      </motion.div>
-    )}
-  </motion.section>
-)}
-          </motion.div>
-        </AnimatePresence>
-      </motion.main>
+                  
+                  <div className="text-center">
+                    <motion.button
+                      className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-2xl font-semibold disabled:opacity-50 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={getAiFeedback}
+                      disabled={isLoading || Object.keys(groundingResponses).length === 0}
+                    >
+                      {isLoading ? (
+                        <div className="flex items-center space-x-2">
+                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span>Analyzing...</span>
+                        </div>
+                      ) : (
+                        'Get AI Feedback'
+                      )}
+                    </motion.button>
+                  </div>
+                  
+                  {aiFeedback && (
+                    <motion.div
+                      className="mt-8 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-2xl border border-blue-200 dark:border-blue-800"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                    >
+                      <div className="flex items-start space-x-3">
+                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                          <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">AI Feedback</h4>
+                          <div className="text-blue-700 dark:text-blue-300 whitespace-pre-line">
+                            {aiFeedback}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </motion.div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
     </div>
   )
 }

@@ -55,6 +55,16 @@ export default function ChatBot() {
     scrollToBottom()
   }, [messages])
 
+  useEffect(() => {
+    // Listen for open chat bot events
+    const handleOpenChatBot = () => {
+      setIsOpen(true)
+    }
+
+    window.addEventListener('openChatBot', handleOpenChatBot)
+    return () => window.removeEventListener('openChatBot', handleOpenChatBot)
+  }, [])
+
   const detectMoodAndMusic = (text: string): { mood: Mood; needsMusic: boolean } => {
     const lowerText = text.toLowerCase()
     
@@ -177,7 +187,7 @@ export default function ChatBot() {
       {/* Chat Bubble */}
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-violet-500 to-purple-600 rounded-full shadow-lg flex items-center justify-center text-white hover:shadow-xl transition-all duration-300 z-50 ${
+        className={`fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-violet-500 to-purple-600 rounded-full shadow-lg flex items-center justify-center text-white hover:shadow-xl transition-all duration-300 z-30 ${
           isOpen ? 'hidden' : 'animate-bounce'
         }`}
         aria-label="Open AI chat"
@@ -189,7 +199,7 @@ export default function ChatBot() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-96 h-[32rem] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl flex flex-col z-50 border border-gray-200 dark:border-gray-700">
+        <div className="fixed bottom-6 right-6 w-96 h-[32rem] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl flex flex-col z-40 border border-gray-200 dark:border-gray-700">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-violet-500 to-purple-600 rounded-t-2xl">
             <div className="flex items-center space-x-3">

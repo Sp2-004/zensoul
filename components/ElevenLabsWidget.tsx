@@ -1,105 +1,141 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
+import { toast } from './ui/toaster'
 
-// Add custom element type for TypeScript
+// Declare the ElevenLabs custom element
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'elevenlabs-convai': React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      > & {
-        'agent-id'?: string
-      }
+      'elevenlabs-convai': any
     }
   }
 }
 
-const AGENT_ID =
-  process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ||
-  'your_actual_agent_id_here' // Replace with your agent ID
+const PRIMARY_AGENT_ID = 'agent_0901k4n1sv5nf8stzfm9254037ad'
 
 export default function ElevenLabsWidget() {
-  const [isLoaded, setIsLoaded] = useState(false)
   const [isActive, setIsActive] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [scriptLoaded, setScriptLoaded] = useState(false)
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    // Load ElevenLabs script
+    const loadElevenLabsScript = () => {
+      if (document.querySelector('script[src*="elevenlabs"]')) {
+        console.log('ElevenLabs script already loaded')
+        setScriptLoaded(true)
+        return
+      }
 
-    console.log('AGENT_ID:', AGENT_ID)
-
-    if ((window as any).ElevenLabsConvAI) {
-      setIsLoaded(true)
-      return
-    }
-
-    const existingScript = document.getElementById('elevenlabs-convai-script')
-    if (existingScript) return
-
-    const loadScript = (attempt = 1, maxAttempts = 3) => {
       const script = document.createElement('script')
-      script.id = 'elevenlabs-convai-script'
       script.src = 'https://elevenlabs.io/convai-widget/index.js'
       script.async = true
       script.onload = () => {
-        setIsLoaded(true)
-        setError(null)
-        // Hide default rendering
-        const defaultConvai = document.querySelector('elevenlabs-convai')
-        if (defaultConvai instanceof HTMLElement) {
-          defaultConvai.style.display = 'none'
-        }
+        console.log('ElevenLabs script loaded successfully')
+        setScriptLoaded(true)
       }
       script.onerror = () => {
-        if (attempt < maxAttempts) {
-          console.warn(`Retrying to load ElevenLabs script (Attempt ${attempt + 1}/${maxAttempts})`)
-          setTimeout(() => loadScript(attempt + 1, maxAttempts), 1000)
-        } else {
-          console.error('Failed to load ElevenLabs ConvAI script after retries ❌')
-          setIsLoaded(false)
-          setError('Failed to load AI assistant. Please check network or agent ID.')
-        }
+        console.log('Failed to load ElevenLabs script')
+        setScriptLoaded(false)
       }
-      document.body.appendChild(script)
+      document.head.appendChild(script)
     }
 
-    loadScript()
+    loadElevenLabsScript()
+  }, [])
+
+  useEffect(() => {
+    const handleStartElevenLabsVoice = () => {
+      console.log('ElevenLabs voice event received')
+      
+      // Close Tavus if it's open
+      const closeTavusEvent = new CustomEvent('closeTavus')
+      window.dispatchEvent(closeTavusEvent)
+      
+      setIsActive(true)
+      toast.success('Opening ElevenLabs Voice Therapy...')
+    }
+
+    const handleCloseElevenLabs = () => {
+      console.log('Close ElevenLabs event received')
+      setIsActive(false)
+    }
+
+    window.addEventListener('startElevenLabsVoice', handleStartElevenLabsVoice)
+    window.addEventListener('closeElevenLabs', handleCloseElevenLabs)
 
     return () => {
-      const script = document.getElementById('elevenlabs-convai-script')
-      if (script) script.remove()
+      window.removeEventListener('startElevenLabsVoice', handleStartElevenLabsVoice)
+      window.removeEventListener('closeElevenLabs', handleCloseElevenLabs)
     }
   }, [])
 
   const toggleConversation = () => {
-    if (!isLoaded) return
-    setIsActive((prev) => !prev)
+    setIsActive(!isActive)
   }
 
   return (
-    <div className="fixed bottom-6 left-6 z-50">
+    <>
+      {/* ElevenLabs Voice Widget - Bottom Panel */}
       {isActive && (
-        <div className="mb-4">
-          {error ? (
-            <p className="text-red-600 text-center p-4 bg-white rounded-lg shadow-md">{error}</p>
-          ) : (
-            <elevenlabs-convai
-              agent-id={AGENT_ID}
-              style={{ width: '100%', height: '400px', border: 'none' }}
-            ></elevenlabs-convai>
-          )}
+        <div className="fixed bottom-0 left-0 right-0 z-35 p-4">
+          <div className="bg-white dark:bg-slate-800 rounded-t-2xl shadow-2xl max-w-4xl mx-auto border-t border-gray-200 dark:border-slate-700">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-emerald-500 to-teal-500 p-3 text-white rounded-t-2xl">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold">ElevenLabs Voice Therapy</h3>
+                    <div className="flex items-center text-emerald-100">
+                      <div className="w-2 h-2 bg-emerald-300 rounded-full animate-pulse mr-2"></div>
+                      <span className="text-xs">AI Voice Assistant Active</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <button
+                  onClick={toggleConversation}
+                  className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* ElevenLabs Widget Content */}
+            <div className="p-2">
+              {scriptLoaded ? (
+                <div className="bg-slate-50 dark:bg-slate-700 rounded-xl overflow-hidden">
+                  <elevenlabs-convai 
+                    agent-id={PRIMARY_AGENT_ID}
+                    style={{
+                      width: '100%',
+                      height: '350px',
+                      border: 'none',
+                      borderRadius: '12px',
+                      backgroundColor: 'transparent'
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="flex items-center justify-center py-8">
+                  <div className="text-center">
+                    <div className="w-12 h-12 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin mx-auto mb-3"></div>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm">Loading ElevenLabs Voice Interface...</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
-      <button
-        onClick={toggleConversation}
-        className="w-40 h-16 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full shadow-lg flex items-center justify-center text-white text-sm font-medium hover:shadow-xl transition-all duration-300 group"
-        disabled={!isLoaded}
-        aria-label={isActive ? 'Close Call' : 'Need Help? Start Call'}
-      >
-        {isActive ? 'Close Call' : 'Need Help? Start Call'}
-      </button>
-    </div>
+    </>
   )
 }

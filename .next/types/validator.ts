@@ -113,6 +113,12 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   handler satisfies RouteHandlerConfig<"/api/journal">
 }
 
+// Validate ../../app/api/tavus/create-conversation/route.ts
+{
+  const handler = {} as typeof import("../../app/api/tavus/create-conversation/route.js")
+  handler satisfies RouteHandlerConfig<"/api/tavus/create-conversation">
+}
+
 
 
 

@@ -1,4 +1,4 @@
-// File: C:\Users\SATYA POOJITH\Downloads\project-bolt-github-7yg7mwa7\project\app\api\ai\affirmation\route.ts
+// File: C:\Users\SATYA POOJITH\Downloads\AHZ\app\api\ai\affirmation\route.ts
 import * as entry from '../../../../../../app/api/ai/affirmation/route.js'
 import type { NextRequest } from 'next/server.js'
 
