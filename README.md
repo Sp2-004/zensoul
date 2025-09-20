@@ -76,8 +76,10 @@ Before you begin, ensure you have the following installed on your system:
 npm run dev
 ```
 
+
    Then open your browser at:  
-   http://localhost:3000  
+   http://localhost:3000 
+ 
 ---
 
 ## Usage
@@ -92,14 +94,14 @@ npm run dev
 
 ## Building for Production
 1. **Build the Project**  
- ```
- npm run build
+```
+npm run build
 ```
 
 3. **Start the Production Server**  
 ```
- npm run start
- ```
+npm run start
+```
 
    The app will be live at:  
    http://localhost:3000  
