@@ -1,8 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Define the payload type
+interface Payload {
+  replica_id: string;
+  persona_id?: string; // Optional persona_id
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { replicaId, personaId } = await request.json()
+
+    // Type checking for replicaId and personaId
+    if (typeof replicaId !== 'string') {
+      return NextResponse.json(
+        { error: 'Replica ID must be a string' },
+        { status: 400 }
+      )
+    }
+    if (personaId && typeof personaId !== 'string') {
+      return NextResponse.json(
+        { error: 'Persona ID must be a string' },
+        { status: 400 }
+      )
+    }
     
     const apiKey = process.env.TAVUS_API_KEY
     
@@ -33,8 +53,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Prepare payload like your friend's code
-    const payload = { replica_id: replicaId }
+    // Prepare payload with explicit type
+    const payload: Payload = { replica_id: replicaId }
     
     // Only add persona_id if explicitly provided and not empty
     if (personaId && personaId.trim() !== '') {
@@ -95,14 +115,14 @@ export async function POST(request: NextRequest) {
       data
     })
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating Tavus conversation:', error)
     return NextResponse.json(
       { 
         error: 'Internal server error',
         message: error.message,
         debug: {
-          replicaId: replicaId,
+          replicaId: replicaId || 'undefined',
           hasApiKey: !!process.env.TAVUS_API_KEY
         }
       },
